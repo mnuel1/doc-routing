@@ -72,30 +72,35 @@
 
                 $result = $stmt->get_result();
 
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-
-                    if (password_verify($password, $row['password'])) {
-                        $payload = array('user_id' => $row['id']);
-
-                        $token = generateToken($payload);
-
-                        setcookie("token", $token, time() + (86400 * 30), "/"); // saves token to cookie 
-
-                        $_SESSION['userId'] = $row["id"];
-                        $_SESSION['username'] = $row["username"];
-
-                        return array("title" => "Success", "message" => "Login Successful", "data" => []);
-                    } else {
-                        logFailedLoginAttempt($connect, $_SERVER['REMOTE_ADDR']);
-                        incrementLoginAttempt();
-                        return array("title" => "Failed", "message" => "Passwords do not match. Please verify your password.", "data" => []);
-                    }
-                } else {
+                if ($result->num_rows < 0) {
                     logFailedLoginAttempt($connect, $_SERVER['REMOTE_ADDR']);
                     incrementLoginAttempt();
                     return array("title" => "Failed", "message" => "Username does not exist. Please verify your username.", "data" => []);
                 }
+
+                $row = $result->fetch_assoc();
+
+                if (!password_verify($password, $row['password'])) {
+                    logFailedLoginAttempt($connect, $_SERVER['REMOTE_ADDR']);
+                    incrementLoginAttempt();
+                    return array("title" => "Failed", "message" => "Passwords do not match. Please verify your password.", "data" => []);
+                }
+                 
+                $payload = array('user_id' => $row['id']);
+
+                $token = generateToken($payload);
+
+                setcookie("token", $token, time() + (86400 * 30), "/"); // saves token to cookie 
+
+                $_SESSION['userId'] = $row["id"];
+                $_SESSION['username'] = $row["username"];
+                $_SESSION['department'] = $row['department'];
+                $_SESSION['accessLevel'] = $row['accessLevel'];
+                                
+
+                return array("title" => "Success", "message" => "Login Successful", "data" => []);
+              
+                
 
             } else {
                 $last_attempt_time = isset($_SESSION['last_attempt_time']) ? $_SESSION['last_attempt_time'] : null;
