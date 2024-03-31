@@ -1,20 +1,17 @@
 <?php
 
-    require_once '../vendor/autoload.php';
-    use Dotenv\Dotenv;
+    $env = parse_ini_file('.env');
+    $servername = $env['SERVER_NAME'];
+    $username = $env["USERNAME"];
+    $password = $env["PASSWORD"];
+    $dbname = $env["DBNAME"];
 
-    $dotenv = Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-
-    $servername = $_ENV["SERVER_NAME"];
-    $username = $_ENV["USERNAME"];
-    $password = $_ENV["PASSWORD"];
-    $dbname = $_ENV["DBNAME"];
 
     $connect = new mysqli($servername, $username, $password, $dbname);
 
     if (!$connect->connect_error) {
-        // echo "Success";
+        echo "Success";
     } else {
         die("Connection Failed : " . $connect->connect_error);
     }
+?>

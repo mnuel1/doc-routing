@@ -1,0 +1,24 @@
+{
+    "HR Training Unit": {
+        "Training Attendance Records": "Direct Access",
+        "Training Schedule and Calendar": "Direct Access",
+        "Trainee Employee Report": "Direct Access",
+        "Training Program Proposals": "Direct Access",
+        "Training Curriculum and Course Materials": "Direct Access"
+    },
+    "Finance Dept": {
+        "Expense Reimbursement Policies and Procedures": "Direct Access",
+        "Financial Statements": "Direct Access",
+        "Payroll": "Direct Access",
+        "Budget Allocation Documents": "Direct Access",
+        "Employee Benefits Cost Breakdown": "Direct Access"
+    },
+    "Operations Management Dept": {
+        "Shift Schedules and Rotations": "Direct Access",
+        "Job Descriptions and Specifications": "Direct Access",
+        "Production Schedules": "Direct Access",
+        "Staffing Plans": "Direct Access",
+        "Workforce Planning Reports": "Direct Access"   
+        
+    }
+}

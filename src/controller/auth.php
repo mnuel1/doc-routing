@@ -1,14 +1,9 @@
 <?php
-    require_once '../../vendor/autoload.php';
-    use Dotenv\Dotenv;
-    
-    session_start();
-    
+   
     function generateToken ($payload) {
-        $dotenv = Dotenv::createImmutable(__DIR__);
-        $dotenv->load();
+        $env = parse_ini_file('.env');
 
-        $secretKey = $_ENV["SECRET_KEY"];
+        $secretKey = $env["SECRET_KEY"];
        
         // Encode the payload as JSON
         $payloadJson = json_encode($payload);
@@ -27,6 +22,7 @@
         return $token;
         
     }
+
     function logFailedLoginAttempt($connect, $ipAddress){
                 
         try {
@@ -86,16 +82,24 @@
                     return array("title" => "Failed", "message" => "Passwords do not match. Please verify your password.", "data" => []);
                 }
                  
-                $payload = array('user_id' => $row['id']);
-
+                $payload = array('user_id' => $row['userId']);
+                
                 $token = generateToken($payload);
-
+                
                 setcookie("token", $token, time() + (86400 * 30), "/"); // saves token to cookie 
 
-                $_SESSION['userId'] = $row["id"];
-                $_SESSION['username'] = $row["username"];
-                $_SESSION['department'] = $row['department'];
+                $getDepartmentStmt = $connect->prepare("SELECT department, name, email FROM user_info
+                    WHERE userId = ?");
+                $getDepartmentStmt->bind_param("i", $row['userId']);
+                $getDepartmentStmt->execute();
+                $result = $getDepartmentStmt->get_result()->fetch_assoc();
+                                
+                $_SESSION['userId'] = $row["userId"];
+                $_SESSION['username'] = $row["username"];                
                 $_SESSION['accessLevel'] = $row['accessLevel'];
+                $_SESSION['department'] = $result['department'];
+                $_SESSION['name'] = $result['name'];
+                $_SESSION['email'] = $result['email'];
                                 
 
                 return array("title" => "Success", "message" => "Login Successful", "data" => []);

@@ -11,10 +11,10 @@
 
         try {
             $userId = $_SESSION['userId'];
-            $username = $_SESSION['username'];
 
-            $stmt = $connect->prepare("SELECT * FROM user_info WHERE id = ? AND username = ? ");
-            $stmt->bind_param("is", $userId, $username);
+            $stmt = $connect->prepare("SELECT uc.*, ui.* FROM user_cred uc
+                JOIN user_info ui ON uc.userID = ?");
+            $stmt->bind_param("i", $userId);
             $stmt->execute();
 
             $result = $stmt->get_result()->fetch_assoc();

@@ -1,6 +1,6 @@
 <?php
 
-    session_start();
+
 
     function generateTrackingNumber($name) {
         $timestamp = time(); // Current timestamp
@@ -8,79 +8,83 @@
         $randomLetters = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 4); // Random 4 letters
         $recipient = substr($name, 0, 4); // Extract first 4 letters of recipient's name
         
-
         $trackingNumber = "TN-" . $recipient . "-" . $randomLetters . "-" . $timestamp . "-" . $randomNumbers;
         
         return $trackingNumber;
     }
+    
     // returns the initial location of the documents that will be requested
-    /*
-        ROUTING RULE BASED ON THE DOC TYPE
-        HR TRAINING UNIT
-        Documents for Direct Request:
-        Training Attendance Records (Individual employee access only)
-        Training Schedule and Calendar (Unless significant changes require department head approval)
+    function routingProcess($documentType, $department) {
+        // Read JSON data from file
+        $routingProcess = json_decode(file_get_contents('../docs process/routing process.json'), true);
+    
+        // Check if the department exists in the JSON data
+        if (isset($routingProcess[$department])) {
+            // Get the array associated with the provided department and document type
+            $documentArray = $routingProcess[$department];
 
-        Documents Needing Centralized Approval:
-        Trainee Employee Report (May require review by HR manager before sending to requesting department)
-        Training Program Proposals (Requires approval by HR or training committee for budget allocation)
-        Training Curriculum and Course Materials (May require review by subject matter experts before finalization)
-
-        Finance Dept:
-
-        Documents for Direct Request:
-        Expense Reimbursement Policies and Procedures (Public facing document)
-        Financial Statements (Public facing document, might require departmental review before release)
-
-        Documents Needing Centralized Approval:
-        Payroll (Highly sensitive, requires strict access controls)
-        Budget Allocation Documents (Requires approval by finance manager or budget committee)
-        Employee Benefits Cost Breakdown (Requires review by HR and finance for accuracy)
-
-        Operations Management Dept:
-
-        Documents for Direct Request:
-        Shift Schedules and Rotations (Unless major changes require management approval)
-        Job Descriptions and Specifications (Unless for new positions requiring HR review)
-        
-        Documents Needing Centralized Approval:
-        Production Schedules (May require approval by production manager or executive team)
-        Staffing Plans (Requires HR and Operations Management collaboration and approval)
-        Workforce Planning Reports (May require review by senior management for strategic planning)
-    */
-    function routingRules($documentType) {
-
-        return 'string';
+            // Check if the document type exists in the array
+            if (isset($documentArray[$documentType])) {
+                // Split the routing process string by comma and return the first part
+                $processParts = explode(',', $documentArray[$documentType]);
+                return trim($processParts[0], "[]"); // Remove square brackets and trim whitespace
+            }
+        }
+        // Return a default string if no match is found
+        return null;
     }
+    
     function releaseDocument($connect, $data) {
+        try {
+            $accessLevel = $_SESSION['accessLevel'];
+            $requestedDocId = $data['requestedDocId'];
+            $status = "Release";
+            if ($accessLevel <  1) {
+                return array("title" => "Failed", "message" => "Unauthorized User", "data" => []);
+            } 
 
-    }
-    // TODO ROUTING RULES, UPDATE RULES, RELEASE RULES ROUTES API
+            $stmt = $connect->prepare("UPDATE request_documents 
+                SET status = ?
+                WHERE requestId = ?");
+            
+            $stmt->bind_param("ss", $status, $requestedDocId);
+            $stmt->execute();
+
+            return array("title" => "Success", "message" => "Released Document", "data" => []);
+
+        } catch (\Throwable $th) {
+            throw $th;
+            return array("title" => "Internal Error", "message" => "Something has went wrong. Please try again later.", "data" => []);
+        }         
+    }  
+
     function updateRequestedDoc($connect, $data) {
-
         try {
             $remarks = $data['remarks'];
             $releaseDate = $data['releaseDate'];
             $location = $data['location'];
             $status = $data['status'];
+            $requestId = $data['requestId'];
             
-            $stmt = $connect->prepare("UPDATE request_documents SET remarks = ?, releaseDate = ?, location = ?, status = ?");
-            $stmt->bind_param("ssss", $remarks, $releaseDate, $location, $status);
+            $stmt = $connect->prepare("UPDATE request_documents 
+                SET remarks = ?, releaseDate = ?, location = ?, status = ?
+                WHERE requestId = ?");
+            $stmt->bind_param("ssssi", $remarks, $releaseDate, $location, $status, $requestId);
             $stmt->execute();
 
             return array("title" => "Success", "message" => "Action Succeeded", "data" => []);
         } catch (\Throwable $th) {
             throw $th;
             return array("title" => "Internal Error", "message" => "Something has went wrong. Please try again later.", "data" => []);
-        }
-    
+        }    
     }
     // updates the location of the requested doc
     function updateLocRequestedDoc($connect, $data) {
         try {
             $location = $data['location'];
-            $stmt = $connect->prepare("UPDATE request_documents SET location = ?");
-            $stmt->bind_param("s", $location);
+            $requestId = $data['requestId'];
+            $stmt = $connect->prepare("UPDATE request_documents SET location = ? WHERE requestId = ?");
+            $stmt->bind_param("si", $location, $requestId);
             $stmt->execute();
 
             return array("title" => "Success", "message" => "Action Succeeded", "data" => []);
@@ -110,14 +114,17 @@
             }
 
             $row = $result->fetch_assoc();
-
             
             $data = array(
+                'requestId,' => $row['requestId'],
+                'userId,' => $row['userId'],
+                'documentId' => $row['documentId'],
                 "trackingNumber" => $row['trackingNumber'],
                 "remarks" => $row['remarks'],
                 "releaseDate" => $row['releaseDate'],
                 "location" => $row['location'],
                 "status" => $row['status'],
+                "createdAt" => $row['createdAt'],
                 "recipient" => $row['recipient'],
                 "department" => $row['department'],
                 "documentType" => $row['documentType'],
@@ -151,11 +158,15 @@
             $note = $data['note'];
             $purpose = $data['purpose'];
             $actionsNeeded = $data['actionsNeeded'];
-            $location = routingRules($documentType);
+            $location = routingProcess($documentType, $toDepartment);
+
+            if (!$location) {
+                return array("title" => "Failed", "message" => "Location is invalid", "data" => []);
+            }
+
             $documentTitle = $data['documentTitle'];
             $documentFile = $data['documentFile'];
-            
-                    
+                                
             $stmtDocument = $connect->prepare("INSERT INTO documents (title, document, recipient, 
                 department, documentType, note, 
                 purpose, actionsNeeded) 
@@ -187,7 +198,6 @@
         }
         
     }
-
 
     function getAllDocuments($connect) {
 
@@ -224,11 +234,15 @@
                 while ($row = $result->fetch_assoc()) {
                                     
                     $data[$row['id']] = array(
+                        'requestId,' => $row['requestId'],
+                        'userId,' => $row['userId'],
+                        'documentId' => $row['documentId'],
                         "trackingNumber" => $row['trackingNumber'],
                         "remarks" => $row['remarks'],
                         "releaseDate" => $row['releaseDate'],
                         "location" => $row['location'],
                         "status" => $row['status'],
+                        "createdAt" => $row['createdAt'],
                         "recipient" => $row['recipient'],
                         "department" => $row['department'],
                         "documentType" => $row['documentType'],
@@ -248,12 +262,6 @@
 
         }
     }
-
-    function submitDocument($connect, $data) {
-
-    }
-
     
-
-
+    
 ?>

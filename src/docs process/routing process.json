@@ -1,0 +1,24 @@
+{
+    "HR Training Unit": {
+        "Training Attendance Records": "[Send to HR Training Unit, Release]",
+        "Training Schedule and Calendar": "[Send to HR Training Unit, Release]",
+        "Trainee Employee Report": "[Send to HR Training Unit, Send to HR, Review by HR, Release]",
+        "Training Program Proposals": "[Send to HR Training Unit, Review by training committee, Send to HR, Review by HR, Release]",
+        "Training Curriculum and Course Materials": "[Send to HR Training Unit, Review by experts, Send to HR, Review by HR, Release]"
+    },
+    "Finance Dept": {
+        "Expense Reimbursement Policies and Procedures": "[Send to Finance, Release]",
+        "Financial Statements": "[Send to Finance, Release]",
+        "Payroll": "[Send to Finance, Review by HR, Send to HR, Review by HR, Release]",
+        "Budget Allocation Documents": "[Send to Finance, Review by Finance, Send to HR, Review by HR, Release]",
+        "Employee Benefits Cost Breakdown": "[Send to Finance, Review by Finance, Send to HR, Review by HR, Release]"
+    },
+    "Operations Management Dept": {
+        "Shift Schedules and Rotations": "[Send to OM, Release]",
+        "Job Descriptions and Specifications": "[Send to OM, Release]",
+        "Production Schedules": "[Send to OM, Review by OM, Release]",
+        "Staffing Plans": "[Send to OM, Review by OM, Send to HR, Review by HR, Release]",
+        "Workforce Planning Reports": "[Send to OM, Review by OM, Release]"   
+        
+    }
+}

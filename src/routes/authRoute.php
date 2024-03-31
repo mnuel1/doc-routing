@@ -1,9 +1,8 @@
 <?php
     
-    require_once '../../config/config.php';
-    require_once '../controller/auth.php';
-
-
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/config/config.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/src/controller/auth.php';
+    
     if ($_SERVER['REQUEST_URI'] === "/login" 
         && $_SERVER['REQUEST_METHOD'] === 'POST') {
         
