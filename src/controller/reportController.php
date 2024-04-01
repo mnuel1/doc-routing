@@ -1,7 +1,7 @@
 <?php
 
 
-    function getQuickSummaryReport($connect, $data) {
+    function getQuickSummaryReport($connect) {
 
         try {
             $accessLevel = $_SESSION['accessLevel'];
@@ -14,7 +14,7 @@
             $stmt->execute();
             $data = $stmt->get_result()->fetch_assoc();
             
-            return array("title" => "Success", "message" => "Unauthorized User.", "data" => $data);
+            return array("title" => "Success", "message" => "Summary fetched.", "data" => $data);
 
             
         } catch (\Throwable $th) {

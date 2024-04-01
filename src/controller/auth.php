@@ -1,8 +1,8 @@
 <?php
    
     function generateToken ($payload) {
-        $env = parse_ini_file('.env');
-
+        $env = parse_ini_file($_SERVER['DOCUMENT_ROOT'] .'/.env');
+        
         $secretKey = $env["SECRET_KEY"];
        
         // Encode the payload as JSON
@@ -58,24 +58,24 @@
 
 
     function login ($connect, $username, $password) {
-
+        session_start();
         try {
-            if (isUserLockedOut()) {
-
-                $stmt = $connect->prepare("SELECT * FROM user_cred WHERE $username = ?");
+            if (!isUserLockedOut()) {
+                
+                $stmt = $connect->prepare("SELECT * FROM user_cred WHERE username = ?");
                 $stmt->bind_param("s", $username);
                 $stmt->execute();
-
+                
                 $result = $stmt->get_result();
-
-                if ($result->num_rows < 0) {
+             
+                if ($result->num_rows <= 0) {
                     logFailedLoginAttempt($connect, $_SERVER['REMOTE_ADDR']);
                     incrementLoginAttempt();
                     return array("title" => "Failed", "message" => "Username does not exist. Please verify your username.", "data" => []);
                 }
 
                 $row = $result->fetch_assoc();
-
+                
                 if (!password_verify($password, $row['password'])) {
                     logFailedLoginAttempt($connect, $_SERVER['REMOTE_ADDR']);
                     incrementLoginAttempt();
@@ -93,20 +93,16 @@
                 $getDepartmentStmt->bind_param("i", $row['userId']);
                 $getDepartmentStmt->execute();
                 $result = $getDepartmentStmt->get_result()->fetch_assoc();
-                                
                 $_SESSION['userId'] = $row["userId"];
                 $_SESSION['username'] = $row["username"];                
                 $_SESSION['accessLevel'] = $row['accessLevel'];
                 $_SESSION['department'] = $result['department'];
                 $_SESSION['name'] = $result['name'];
                 $_SESSION['email'] = $result['email'];
-                                
-
                 return array("title" => "Success", "message" => "Login Successful", "data" => []);
-              
-                
-
+                          
             } else {
+                
                 $last_attempt_time = isset($_SESSION['last_attempt_time']) ? $_SESSION['last_attempt_time'] : null;
                 $current_time = time();
                 $wait_time = 3600; // 1 hour in seconds
@@ -128,6 +124,7 @@
             }            
         } catch (\Throwable $th) {
             throw $th;
+            return array("title" => "Success", "message" => "Login Successful", "data" => []);
         }
         
     }

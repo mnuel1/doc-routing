@@ -11,11 +11,8 @@
     header("X-Content-Type-Options: nosniff");
     header("X-Frame-Options: DENY");
     header("X-XSS-Protection: 1; mode=block");
-  
-    // echo realpath('./src/routes/routes.php');
-    // set_include_path(__DIR__);
-    // echo get_include_path();
+      
     require_once 'src/routes/route.php';
     require_once 'src/routes/authRoute.php';
-  
+    
 ?>

@@ -27,11 +27,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `documents`
 --
 
-CREATE TABLE `documents` (
-  `documentId` int(11) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `document` varchar(255) DEFAULT NULL,
-  `recipient` varchar(255) NOT NULL,
+CREATE TABLE `documents` ( -- sub table
+  `documentId` int(11) NOT NULL, -- id
+  `title` varchar(255) DEFAULT NULL, -- col 1
+  `document` varchar(255) DEFAULT NULL, -- either hidden eto yung document or pwede na rin link to direct open it 
+  `recipient` varchar(255) NOT NULL, -- so on
   `department` varchar(255) NOT NULL,
   `documentType` varchar(255) NOT NULL,
   `note` varchar(255) NOT NULL,
@@ -39,34 +39,21 @@ CREATE TABLE `documents` (
   `actionsNeeded` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `login_attempts`
---
-
-CREATE TABLE `login_attempts` (
-  `id` int(11) NOT NULL,
-  `ipAddress` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `request_documents`
 --
 
-CREATE TABLE `request_documents` (
-  `requestId` int(11) NOT NULL,
-  `userId` int(11) NOT NULL,
-  `documentId` int(11) NOT NULL,
-  `trackingNumber` int(11) NOT NULL,
-  `remarks` varchar(255) DEFAULT NULL,
-  `releaseDate` timestamp NULL DEFAULT NULL,
+CREATE TABLE `request_documents` ( -- main table
+  `requestId` int(11) NOT NULL, -- id
+  `userId` int(11) NOT NULL, -- hidden
+  `documentId` int(11) NOT NULL, -- hidden
+  `trackingNumber` int(11) NOT NULL, -- col 1
+  `remarks` varchar(255) DEFAULT NULL, -- col 2
+  `releaseDate` timestamp NULL DEFAULT NULL, -- so on
   `location` varchar(255) NOT NULL,
   `status` enum('APPROVED','REJECTED','RELEASED','PENDING') NOT NULL,
-  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(), -- eto yung timestamp
   `updatedAt` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

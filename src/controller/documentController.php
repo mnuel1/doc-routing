@@ -1,6 +1,6 @@
 <?php
 
-
+    
 
     function generateTrackingNumber($name) {
         $timestamp = time(); // Current timestamp
@@ -35,10 +35,11 @@
     }
     
     function releaseDocument($connect, $data) {
+        
         try {
             $accessLevel = $_SESSION['accessLevel'];
             $requestedDocId = $data['requestedDocId'];
-            $status = "Release";
+            $status = "Released";
             if ($accessLevel <  1) {
                 return array("title" => "Failed", "message" => "Unauthorized User", "data" => []);
             } 
@@ -49,6 +50,10 @@
             
             $stmt->bind_param("ss", $status, $requestedDocId);
             $stmt->execute();
+            
+            if ($stmt->affected_rows !== 1) {
+                return array("title" => "Failed", "message" => "Request ID Invalid.", "data" => []);
+            }
 
             return array("title" => "Success", "message" => "Released Document", "data" => []);
 
@@ -102,7 +107,7 @@
 
             $stmt = $connect->prepare("SELECT rd.*, d.*
                 FROM request_documents rd
-                JOIN documents d ON rd.documentId = d.id
+                JOIN documents d ON rd.documentId = d.documentId
                 WHERE rd.trackingNumber = ? ");
             $stmt->bind_param("s", $trackingNumber);
             $stmt->execute();
@@ -183,7 +188,7 @@
                 trackingNumber, location, status) 
                 VALUES (?, ?, ?, ?, ?) 
             ");            
-            $stmtRequest->bind_param("iisssssss", $userId, $documentId, $trackingNumber, $location, $status);
+            $stmtRequest->bind_param("iisss", $userId, $documentId, $trackingNumber, $location, $status);
             $stmtRequest->execute();
 
             $connect->commit();
@@ -204,22 +209,22 @@
         try {
             $accessLevel = $_SESSION['accessLevel'];
 
-            if ($accessLevel === 1) {
+            if ($accessLevel === '1') {
                 return array("title" => "Failed", "message" => "Not Authorized!", "data" => []);
             }
-
-            if ($accessLevel === 3) {
+            $stmt = null;
+            if ($accessLevel === '3') {                
                 $stmt = $connect->prepare("SELECT rd.*, d.*
                     FROM request_documents rd
-                    JOIN documents d ON rd.documentId = d.id");
+                    JOIN documents d ON rd.documentId = d.documentId");
 
-            } else if ($accessLevel === 2) {
+            } else if ($accessLevel === '2') {
                 $userId = $_SESSION['userId'];
                 $department = $_SESSION['department'];
 
                 $stmt = $connect->prepare("SELECT rd.*, d.*
                     FROM request_documents rd
-                    JOIN documents d ON rd.documentId = d.id
+                    JOIN documents d ON rd.documentId = d.documentId
                     WHERE rd.userId = ? AND department = ?
                 ");
                 $stmt->bind_param("is", $userId, $department);                
@@ -233,7 +238,7 @@
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                                     
-                    $data[$row['id']] = array(
+                    $data[$row['documentId']] = array(
                         'requestId,' => $row['requestId'],
                         'userId,' => $row['userId'],
                         'documentId' => $row['documentId'],

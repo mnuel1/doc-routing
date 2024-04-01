@@ -1,6 +1,6 @@
 <?php
 
-    $env = parse_ini_file('.env');
+    $env = parse_ini_file($_SERVER['DOCUMENT_ROOT'] .'/.env');
     $servername = $env['SERVER_NAME'];
     $username = $env["USERNAME"];
     $password = $env["PASSWORD"];

@@ -5,7 +5,7 @@
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
 
-    function sendEmail($email, $body) {
+    function sendEmail($email, $file) {
         try {    
             $mail = new PHPMailer();
     
@@ -29,7 +29,18 @@
             $mail->IsHTML(true);
             $mail->AddAddress($email); // To mail id
             
-            
+            $body = '<html>
+                        <body>
+                        
+                            <p>We are pleased to inform you that the following documents have been released:</p>
+                                                                            
+                            <p>The document is attached to this email for your reference.</p>
+                                                
+                            <p>Best regards,<br>
+                            DocRoute</p>
+                        </body>
+                    </html>';
+            $mail->addStringAttachment($file, "attachment.pdf");
             $mail->MsgHTML($body);
             $mail->WordWrap = 50;
             $mail->Send();
