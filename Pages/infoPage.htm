@@ -1,0 +1,92 @@
+  <!-- FILE INFORMATION PAGE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Files</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../Styles/infoPage.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+    <a class="navbar-brand" href="../Pages/homePage.htm">
+      <img src="../Public/logo.png" alt="Logo" height="30">
+      Doc.Route
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../Pages/homePage.htm">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Pages/incomingPage.htm">Incoming</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Pages/requestForm.htm">Request</a>
+        </li>
+      </ul>    
+      <button class="btn btn-outline-light my-2 my-sm-0">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container-fluid my-5 whiteContainer">
+    <div class="d-flex align-items-center mb-4">
+        <img src="../Public/logo.png" alt="Logo" class="imageForm">
+        <h4 class="text-left textHead mb-0"><b> DOCUMENT INFORMATION</b></h4>
+      </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6">
+        <div class="form-group">
+          <label for="trackingNo">Tracking No:</label>
+          <input type="text" class="form-control" id="trackingNo" placeholder="Tracking No." readonly>
+        </div>
+        <div class="form-group">
+          <label for="from">From:</label>
+          <input type="text" class="form-control" id="from" placeholder="From" readonly>
+        </div>
+        <div class="form-group">
+          <label for="dateTime">Date & Time:</label>
+          <input type="text" class="form-control" id="dateTime" placeholder="Date and Time" readonly>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="form-group">
+          <label for="needTo">Need To:</label>
+          <input type="text" class="form-control" id="needTo" placeholder="Action Needed" readonly>
+        </div>
+        <div class="form-group">
+          <label for="docType">Document Type:</label>
+          <input type="text" class="form-control" id="docType" placeholder="Document Type" readonly>
+        </div>
+        <div class="form-group">
+          <label for="department">Department:</label>
+          <input type="text" class="form-control" id="department" placeholder="Department" readonly>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="form-group">
+          <label for="purpose">Purpose:</label>
+          <textarea class="form-control" id="purpose" rows="3" placeholder="Purpose" readonly></textarea>
+        </div>
+        <div class="form-group">
+          <label for="note">Note:</label>
+          <textarea class="form-control" id="note" rows="4" placeholder="Additional Notes" readonly></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <button type="button" class="btn btn-approve mr-2">Approve</button>
+      <button type="button" class="btn btn-reject mr-2">Reject</button>
+      <button type="button" class="btn btn-authenticate">Authenticate</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

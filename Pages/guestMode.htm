@@ -1,0 +1,53 @@
+  <!-- GUEST MODE -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest File Submission</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../Styles/guestMode.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-custom">
+    <a class="navbar-brand" href="../Pages/index.htm">
+        <img src="../Public/logo.png" alt="Logo" height="30">
+        Doc.Route
+    </a>
+  </nav>
+  <div class="container">
+    <div class="row justify-content-center align-items-center mb-4">
+      <div class="mr-3">
+        <img src="../Public/guestMode.png" alt="File Icon" class="imageContent">
+      </div>
+      <div class="row justify-content-center align-items-center mb-3 textContent">
+        <h1 class="mb-0 textContent"><b>SUBMIT FILE</b></h1>
+      </div>
+    </div>
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="RECIPIENT">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="FROM">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="TOPIC">
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" rows="3" placeholder="ADDITIONAL MESSAGE"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-primary btn-block btn-file">INSERT FILE</button>
+      </div>
+    </form>
+    <div class="text-center btn-properties">
+      <button class="btn btn-properties-return" onclick="window.location.href='index.htm'">RETURN</button>
+      <button class="btn btn-properties-submit" onclick="window.location.href='#'">SUBMIT</button>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

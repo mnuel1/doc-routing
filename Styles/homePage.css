@@ -1,0 +1,108 @@
+/* HOMEPAGE PAGE STYLE*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E9F7FA;
+    color: #5289F6;
+}
+
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+    color: #fff;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.card-body {
+    padding: 60px;
+}
+.card-title {
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.fa-3x {
+    color: #007bff;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.table {
+    margin-top: -20px;
+}
+
+.btn-outline-light {
+    margin-left: 10px;
+}
+
+.secondPart {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.5);
+}
+
+body *:not(.btn-primary):not(.btn-outline-light):not(.navbar-nav .nav-link):not(.navbar-brand) {
+    color: #5289F6;
+}
+.bg-custom {
+    background-color: #2754CC !important;
+}
+.bottom-right-img {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+}
+.summary-value {
+    font-size: 50px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 10px;
+    transform: translate(-50%, -50%); /* Center the value */
+    z-index: 1; /* Ensure it's above other elements */
+}
+
+.filter-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #2754CC;
+    color: #e0fbfc;
+    text-shadow: 0 0 10px white;
+}
+
+/* Add a new class to signify the selected filter button */
+.selected-filter {
+    background-color: #008080!important;
+}
+
+/* Adjust hover effect for selected buttons */
+.filter-button.selected-filter:hover {
+    background-color: #2754CC;
+}
+
+/* Adjust the color of text for selected buttons */
+.filter-button.selected-filter {
+    color: #e0fbfc;
+    text-shadow: 0 0 10px white;
+}

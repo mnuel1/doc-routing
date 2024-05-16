@@ -1,0 +1,90 @@
+/* GUEST MODE STYLE*/
+body {
+  font-family: Arial, sans-serif;
+  background-color: #E9F7FA;
+  color: #5289F6;
+}
+.container {
+  max-width: 950px;
+  margin-top: 50px;
+  background-color: #fff;
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+}
+.form-control {
+  border-radius: 0;
+}
+
+.btn {
+  border-radius: 0;
+}
+.navbar {
+  background-color: #2754CC;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+  color: #fff;
+
+}
+.btn-properties{
+  margin-top:10px;
+  
+}
+ .btn-file{
+  background-color: #0056b3;
+  color: #e0fbfc;
+  border: transparent;
+  border-radius: 2px;
+ }
+ .btn-file:hover{
+  background-color: #00b4d8;
+  color: #e0fbfc;
+  text-shadow: 0 0 8px #fff;
+  border: transparent;
+ }
+
+
+.btn-properties-return{
+  background-color: #0056b3;
+  color: #e0fbfc;
+  width: 15%;
+  height: auto;
+  border: transparent;
+  border-radius: 2px;
+
+
+}
+.btn-properties-submit{
+  background-color: #0056b3;
+  color: #e0fbfc;
+  width: 15%;
+  height: auto;
+  border: transparent;
+  border-radius: 2px;
+
+}
+.btn-properties-return:hover{
+  background-color: #00b4d8;
+  color: #e0fbfc;
+  text-shadow: 0 0 8px #fff;
+  border: transparent;
+}
+.btn-properties-submit:hover{
+  background-color: #28a745;
+  color: #e0fbfc;
+  text-shadow: 0 0 8px #fff;
+  border: transparent;
+
+}
+.imageContent{
+  width: 100%;
+  margin-left: -50px;
+  margin-bottom: 20px;
+}
+.textContent{
+  margin-left:-35px;
+}

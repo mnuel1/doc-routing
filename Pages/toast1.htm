@@ -1,0 +1,64 @@
+  <!-- FOR POP UP NOTIF 1 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toast Notification1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .toast {
+            position: relative; 
+            background-color: #2f8deb;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 28%;
+            text-align: center; 
+        }
+
+        .toast-content {
+            margin-bottom: 35px;
+        }
+
+        .toast-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px white;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .illustration {
+            position: absolute;
+            bottom: 0;
+            left: 85%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toast">
+        <div class="toast-content">
+          <div class="toast-title">SUCCESSFULLY APPROVED!</div>
+          <div class="toast-message">One of our agents will reach out to you</div>
+          <div class="toast-message">shortly via email. Thank you!</div>
+        </div>
+        <img src="../Public/toast1.png" alt="Illustration" class="illustration">
+    </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+/* INCOMING PAGE STYLE*/
+body {
+  font-family: Arial, sans-serif;
+  background-color: #E9F7FA;
+  color: #5289F6;
+}
+
+
+.navbar {
+  background-color: #007bff;
+}
+.navbar-brand,
+.navbar-nav .nav-link {
+  color: #fff;
+}
+
+
+.btn-outline-primary {
+  border-color: #007bff;
+  color: #007bff;
+  transition: background-color 0.3s, color 0.3s, text-shadow 0.3s;
+}
+
+
+.btn-outline-primary.active {
+  background-color: #007bff;
+  color: #e0fbfc;
+}
+
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: #0056b3;
+  color: #e0fbfc;
+  text-shadow: 0 0 8px #fff;
+}
+
+
+.btn-approve {
+  background-color: #0056b3;
+  margin-right: 7px;
+  color: #e0fbfc;
+
+}
+.btn-approve:hover {
+  background-color: #28a745;
+  margin-right: 7px;
+  color: #e0fbfc;
+  text-shadow: 0 0 8px #fff;
+}
+.btn-reject {
+  background-color: #0056b3;
+  margin-right: 7px;
+  color: #e0fbfc;
+
+}
+.btn-reject:hover {
+  background-color: #dc3545;
+  margin-right: 7px;
+  color: #e0fbfc;
+  text-shadow: 0 0 8px #fff;
+}
+.btn-authenticate {
+  background-color: #0056b3;
+  margin-right: 7px;
+  color: #e0fbfc;
+
+}
+.btn-authenticate:hover {
+  background-color: #00b4d8;
+  margin-right: 7px;
+  color: #e0fbfc;
+  text-shadow: 0 0 8px #fff;
+}
+
+
+.table th {
+  color: #5289F6;
+}
+
+
+.buttonAll {
+  margin-top: 500px; 
+}
+
+
+.button-container {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Body text color except specific elements */
+body *:not(.btn-primary):not(.btn-outline-light):not(.navbar-nav .nav-link):not(.navbar-brand):not(.btn-authenticate):not(.btn-reject):not(.btn-approve):not(.btn-outline-primary):not(.btn-outline-light) {
+  color: #5289F6;
+}
+
+.bg-custom {
+  background-color: #2754CC !important;
+}
